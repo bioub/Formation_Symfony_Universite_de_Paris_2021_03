@@ -6,12 +6,17 @@ $bankAccount = new BankAccount();
 $bankAccount->setProprietaire('Jean');
 $bankAccount->setSolde(1000);
 
-$bankAccount->crediter(300);
-echo $bankAccount->getSolde(); // 1300
+try {
+    $bankAccount->crediter(300);
+    echo $bankAccount->getSolde() . "\n";  // 1300
 
-$bankAccount->debiter(100);
-echo $bankAccount->getSolde(); // 1200
-
+    $bankAccount->debiter(-100);
+    echo $bankAccount->getSolde() . "\n"; // 1200
+}
+catch (Exception $ex) {
+    // gestionnaire (dans symfony l'erreur s'affiche dans un page spécifique)
+    echo $ex->getMessage();
+}
 /*
  * Exercice :
  * Sans toucher au fichier ex-bank-account.php
