@@ -31,3 +31,37 @@
  * lié à un User et à un ensemble de commentaires
  */
 
+
+require_once 'classes/User.php';
+require_once 'classes/Post.php';
+require_once 'classes/Comment.php';
+
+$post = new Post();
+$post->setId(1)
+    ->setTitle('ABC')
+    ->setContent('lorem ipsum')
+    ->setCreated(new DateTime());
+
+$user = new User();
+$user->setId(1)
+    ->setFirstName('A')
+    ->setLastName('B')
+    ->setEmail('a@b.fr')
+    ->setImage('uploads/photo.jpg');
+
+$post->setUser($user);
+
+$comment1 = new Comment();
+$comment1->setContent('ABC')
+         ->setUser($user)
+        ->setCreated(new DateTime());
+
+$comment2 = new Comment();
+$comment2->setContent('DEF')
+    ->setUser($user)
+    ->setCreated(new DateTime());
+
+$post->addComment($comment1);
+$post->addComment($comment2);
+
+var_dump($post);
