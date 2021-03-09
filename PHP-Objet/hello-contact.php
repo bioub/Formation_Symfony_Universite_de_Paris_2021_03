@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/classes/Contact.php';
+use App\Hello\Contact;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $romain = new Contact();
 $romain->setFirstName('Romain')->setLastName('Bohdanowicz');

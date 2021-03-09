@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/classes/Contact.php';
+use App\Hello\Contact;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $s1 = 'Romain';
 $s2 = $s1; // recopier la valeur

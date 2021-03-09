@@ -32,9 +32,11 @@
  */
 
 
-require_once 'classes/User.php';
-require_once 'classes/Post.php';
-require_once 'classes/Comment.php';
+use App\Entity\Comment;
+use App\Entity\Post;
+use App\Entity\User;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $post = new Post();
 $post->setId(1)

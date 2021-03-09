@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/classes/BankAccount.php';
+use App\Hello\BankAccount;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $bankAccount = new BankAccount();
 $bankAccount->setProprietaire('Jean');
