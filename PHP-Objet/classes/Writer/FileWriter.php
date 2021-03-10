@@ -2,7 +2,7 @@
 
 namespace App\Writer;
 
-class FileWriter
+class FileWriter implements WriterInterface
 {
     protected $handle;
 
@@ -11,8 +11,8 @@ class FileWriter
         $this->handle = fopen($filename, $mode);
     }
 
-    public function write($message) {
-
+    public function write($message)
+    {
         fwrite($this->handle, "$message\n");
     }
 

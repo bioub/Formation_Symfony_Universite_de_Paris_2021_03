@@ -5,6 +5,7 @@ namespace App\Logger;
 
 
 use App\Writer\FileWriter;
+use App\Writer\WriterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
 
@@ -12,15 +13,15 @@ class Logger implements LoggerInterface
 {
     use LoggerTrait;
 
-    protected $fileWriter;
+    protected $writer;
 
-    public function __construct()
+    public function __construct(WriterInterface $writer)
     {
-        $this->fileWriter = new FileWriter('app.log', 'a');
+        $this->writer = $writer;
     }
 
     public function log($level, $message, array $context = array())
     {
-        $this->fileWriter->write("[$level] $message");
+        $this->writer->write("[$level] $message");
     }
 }

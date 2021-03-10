@@ -1,8 +1,11 @@
 <?php
 
+use App\Writer\FileWriter;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
-$logger = new \App\Logger\Logger();
+$fileWriter = new FileWriter('app.log', 'a');
+$logger = new \App\Logger\Logger($fileWriter);
 
 // pageContact dépends de Logger
 // Bonne pratique : dépendre de l'abstraction (interface,
