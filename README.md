@@ -199,3 +199,18 @@ Puis générer les fixtures avec :
 
 `bin/console doctrine:fixtures:load`
 
+## Doctrine queries
+
+Créer les classes `PostRepository`, `UserRepository` (vous pouvez vous inspirez d'une nouvelle entité créée avec la commande `bin/console make:entity`)
+
+Ajouter ces classes dans l'annotation `@Entity` des entités correspondantes via le paramètre `repositoryClass`
+
+Injecter `PostRepository` dans `PostManager` et `UserRepository` dans `UserManager`
+
+Appeler les méthodes du repository pour lire les entités (dans `getAll` et `getById`)
+
+Dans `PostManager` injecter l'entity manager de Doctrine en vérifiant au préalable avec `bin/console debug:container` le nom de la classe ou l'interface enregistrée dans le conteneur.
+
+Appeler les méthodes de l'entity manager dans la méthode `create` de `PostManager`
+
+Tester ensuite avec Postman que vos routes répondent les données en provenance de la base de données.

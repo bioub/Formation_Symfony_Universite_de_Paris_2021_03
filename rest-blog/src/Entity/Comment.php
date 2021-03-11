@@ -3,16 +3,28 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity()
+ */
 class Comment
 {
-    /** @var int */
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
     protected $id;
 
-    /** @var string */
+    /**
+     * @ORM\Column(type="text")
+     */
     protected $content;
 
-    /** @var DateTime */
+    /**
+     * @ORM\Column(type="datetime")
+     */
     protected $created;
 
     /** @var User */

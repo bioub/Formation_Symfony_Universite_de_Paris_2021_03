@@ -2,21 +2,38 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
 class User
 {
-    /** @var int */
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
     protected $id;
 
-    /** @var string */
+    /**
+     * @ORM\Column(length=40)
+     */
     protected $firstName;
 
-    /** @var string */
+    /**
+     * @ORM\Column(length=40)
+     */
     protected $lastName;
 
-    /** @var string */
+    /**
+     * @ORM\Column()
+     */
     protected $email;
 
-    /** @var string */
+    /**
+     * @ORM\Column()
+     */
     protected $image;
 
     /** @var Post[] */
