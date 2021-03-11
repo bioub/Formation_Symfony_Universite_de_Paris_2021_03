@@ -81,7 +81,7 @@ class Post
     /**
      * @return DateTime
      */
-    public function getCreated(): DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
@@ -99,7 +99,7 @@ class Post
     /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
