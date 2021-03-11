@@ -51,7 +51,9 @@ Dans UserManager, créer 2 méthodes sur le meme modèle :
 
 Dans PostController, injecter la dépendence PostManager, en créant une propriété $postManager et en générant un constructeur avec cette propriété
 
-Appeler les méthodes getAll dans list....
+Appeler les méthodes getAll dans list et retourner les Posts en JsonResponse.
+
+Dans create, créer un objet Post le passer au Manager et retourner cet objet en JsonResponse.
 
 Injecter ensuite UserManager dans UserController sur le même modèle.
 
