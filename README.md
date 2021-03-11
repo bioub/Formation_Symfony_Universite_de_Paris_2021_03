@@ -32,3 +32,26 @@ Créer la route suivante dans `AuthController` :
 
 - `GET /auth` -> `login()`
 
+## Créer les classes Manager
+
+Dans le dossier src, créer un sous-dossier Manager
+
+Y créer 2 classes : PostManager et UserManager
+
+Dans PostManager, créer 3 méthodes
+
+- getAll -> retourne un tableau d'entité Post
+- getById -> reçoit en entrée un id et retourne une entité Post (quelconque, pas besoin que l'id corresponde)
+- create -> reçoit en entrée un Post mais ne retourne rien
+
+Dans UserManager, créer 2 méthodes sur le meme modèle :
+
+- getAll
+- getById
+
+Dans PostController, injecter la dépendence PostManager, en créant une propriété $postManager et en générant un constructeur avec cette propriété
+
+Appeler les méthodes getAll dans list....
+
+Injecter ensuite UserManager dans UserController sur le même modèle.
+

@@ -2,13 +2,15 @@
 
 namespace App\Manager;
 
+use App\Entity\Contact;
+
 class ContactManager
 {
     public function getAll()
     {
         return [
-            ['firstName' => 'A'],
-            ['firstName' => 'B'],
+            (new Contact())->setFirstName('A'),
+            (new Contact())->setFirstName('B'),
         ];
     }
 }
