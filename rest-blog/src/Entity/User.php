@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User
 {

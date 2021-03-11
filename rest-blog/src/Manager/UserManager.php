@@ -5,19 +5,25 @@ namespace App\Manager;
 
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 
 class UserManager
 {
+    /** @var UserRepository */
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function getAll(): array
     {
-        return [
-            (new User())->setId(1)->setFirstName('A')->setLastName('B'),
-            (new User())->setId(2)->setFirstName('C')->setLastName('D'),
-        ];
+        return $this->userRepository->findBy([], [], 100);
     }
 
     public function getById($id): User
     {
-        return (new User())->setId($id)->setFirstName('A')->setLastName('B');
+        return $this->userRepository->find($id);
     }
 }

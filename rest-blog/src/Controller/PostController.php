@@ -6,8 +6,11 @@ use App\Entity\Post;
 use App\Manager\PostManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @Route("/posts")
@@ -38,9 +41,10 @@ class PostController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function create(): Response
+    public function create(Request $request, SerializerInterface $serializer): Response
     {
-        $post = (new Post())->setTitle('Title')->setContent('lorem ipsum');
+        $post = $serializer->deserialize($request->getContent(), Post::class, 'json');
+        $post->setCreated(new \DateTime());
 
         $this->postManager->create($post);
 
