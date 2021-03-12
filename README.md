@@ -259,7 +259,7 @@ serializer:
 
 ## Tests Automatisés
 
-Compléter les tests unitaires dans `tests/Entity/PostTest.php` en testant les propriétés `id` et `content``
+Compléter les tests unitaires dans `tests/Entity/PostTest.php` en testant les propriétés `id` et `content`
 
 Dans `tests/Manager/PostJsonPlaceholderManagerTest.php` remplacer les lignes :
 
