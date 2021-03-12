@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/posts")
@@ -46,10 +47,16 @@ class PostController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function create(Request $request, SerializerInterface $serializer): Response
+    public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
         $post = $serializer->deserialize($request->getContent(), Post::class, 'json');
         // $post->setCreated(new \DateTime());
+
+        $errors = $validator->validate($post);
+
+        if (count($errors)) {
+            return $this->json($errors, 422);
+        }
 
         if ($post->getUser()) {
             $user = $this->userManager->getById($post->getUser()->getId());
@@ -57,9 +64,8 @@ class PostController extends AbstractController
         }
 
         $this->postManager->create($post);
-        return new Response();
 
-       // return $this->json($post);
+        return $this->json($post);
     }
 
     /**
