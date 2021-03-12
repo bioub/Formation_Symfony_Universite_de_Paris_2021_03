@@ -29,6 +29,12 @@ class Contact
      */
     protected $lastName;
 
+    /**
+     * @var Company
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", fetch="EAGER", inversedBy="contacts")
+     */
+    protected $company;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +66,18 @@ class Contact
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }

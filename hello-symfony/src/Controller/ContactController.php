@@ -35,6 +35,9 @@ class ContactController extends AbstractController
         $this->logger->debug('ContactController::list called');
         $contacts = $this->contactManager->getAll();
 
+        // var_dump($contacts);
+
         return $this->json($contacts);
+        //$this->render('test/index.html.twig', ['contacts' => $contacts]);
     }
 }

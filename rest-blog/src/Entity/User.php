@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -33,140 +35,100 @@ class User
     protected $email;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(nullable=true)
      */
     protected $image;
 
-    /** @var Post[] */
-    protected $posts = [];
+    /** @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user") */
+    protected $posts;
 
-    /** @var Comment[] */
-    protected $comments = [];
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return User
-     */
-    public function setId(int $id): User
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     * @return User
-     */
-    public function setFirstName(string $firstName): User
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     * @return User
-     */
-    public function setLastName(string $lastName): User
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return User
-     */
-    public function setEmail(string $email): User
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
-    /**
-     * @param string $image
-     * @return User
-     */
-    public function setImage(string $image): User
+    public function setImage(?string $image): self
     {
         $this->image = $image;
+
         return $this;
     }
 
     /**
-     * @return Post[]
+     * @return Collection|Post[]
      */
-    public function getPosts(): array
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    /**
-     * @param Post $post
-     * @return User
-     */
-    public function addPost(Post $post): User
+    public function addPost(Post $post): self
     {
-        $this->posts[] = $post;
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
         return $this;
     }
 
-    /**
-     * @return Comment[]
-     */
-    public function getComments(): array
+    public function removePost(Post $post): self
     {
-        return $this->comments;
-    }
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
 
-    /**
-     * @param Comment $comment
-     * @return User
-     */
-    public function addComment(Comment $comment): User
-    {
-        $this->comments[] = $comment;
         return $this;
     }
+
 
 }

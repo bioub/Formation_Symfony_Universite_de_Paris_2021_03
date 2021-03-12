@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
             $user = $users[mt_rand(0, 4)];
 
             // Associations
-            // $post->setUser($user);
+            $post->setUser($user);
 
             $posts[] = $post;
 
@@ -60,15 +60,13 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 30; $i++)
         {
             $post = $posts[mt_rand(0, 9)];
-            $user = $users[mt_rand(0, 4)];
 
             $comment = new Comment();
             $comment->setContent($faker->sentence())
                 ->setCreated($faker->dateTimeBetween($post->getCreated(), '2021-01-31'));
 
             // Associations
-            // $comment->setPost($post);
-            // $comment->setUser($user);
+            $comment->setPost($post);
 
             $comments[] = $comment;
 

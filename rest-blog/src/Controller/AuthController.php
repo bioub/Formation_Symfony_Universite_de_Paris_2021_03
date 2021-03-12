@@ -16,6 +16,6 @@ class AuthController
      */
     public function login(): Response
     {
-        return new JsonResponse(['msg' => 'auth login']);
+        return new JsonResponse(['token' => 'todo_real_jwt_token']);
     }
 }

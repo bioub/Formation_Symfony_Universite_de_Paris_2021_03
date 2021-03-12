@@ -14,15 +14,19 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
+        $company = new Company();
+        $company->setName('Apple');
+        $manager->persist($company);
+
         for ($i=0; $i<10; $i++) {
             $contact = new Contact();
             $contact->setFirstName($faker->firstName())->setLastName($faker->lastName);
             $manager->persist($contact);
+
+            $contact->setCompany($company);
         }
 
-        $company = new Company();
-        $company->setName('Apple');
-        $manager->persist($company);
+
 
         $manager->flush();
     }

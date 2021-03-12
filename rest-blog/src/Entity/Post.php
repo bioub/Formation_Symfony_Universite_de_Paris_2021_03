@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -33,117 +35,97 @@ class Post
      */
     protected $created;
 
-    /** @var User */
+    /** @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts") */
     protected $user;
 
-    /** @var Comment[] */
-    protected $comments = [];
+    /** @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post") */
+    protected $comments;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return Post
-     */
-    public function setId(int $id): Post
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return Post
-     */
-    public function setTitle(string $title): Post
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     * @return Post
-     */
-    public function setContent(string $content): Post
+    public function setContent(string $content): self
     {
         $this->content = $content;
+
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreated(): ?DateTime
+    public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @param DateTime $created
-     * @return Post
-     */
-    public function setCreated(DateTime $created): Post
+    public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
+
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return Post
-     */
-    public function setUser(User $user): Post
+    public function setUser(?User $user): self
     {
         $this->user = $user;
+
         return $this;
     }
 
     /**
-     * @return Comment[]
+     * @return Collection|Comment[]
      */
-    public function getComments(): array
+    public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    /**
-     * @param Comment $comment
-     * @return Post
-     */
-    public function addComment(Comment $comment): Post
+    public function addComment(Comment $comment): self
     {
-        $this->comments[] = $comment;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
+
         return $this;
     }
 
