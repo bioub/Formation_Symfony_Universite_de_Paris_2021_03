@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Manager\PostManager;
+use App\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +19,20 @@ class PostController extends AbstractController
     /** @var PostManager */
     protected $postManager;
 
+    /** @var UserManager */
+    protected $userManager;
+
     /**
      * PostController constructor.
      * @param PostManager $postManager
+     * @param UserManager $userManager
      */
-    public function __construct(PostManager $postManager)
+    public function __construct(PostManager $postManager, UserManager $userManager)
     {
         $this->postManager = $postManager;
+        $this->userManager = $userManager;
     }
+
 
     /**
      * @Route(methods={"GET"})
@@ -42,11 +49,17 @@ class PostController extends AbstractController
     public function create(Request $request, SerializerInterface $serializer): Response
     {
         $post = $serializer->deserialize($request->getContent(), Post::class, 'json');
-        $post->setCreated(new \DateTime());
+        // $post->setCreated(new \DateTime());
+
+        if ($post->getUser()) {
+            $user = $this->userManager->getById($post->getUser()->getId());
+            $post->setUser($user);
+        }
 
         $this->postManager->create($post);
+        return new Response();
 
-        return $this->json($post);
+       // return $this->json($post);
     }
 
     /**
