@@ -27,6 +27,11 @@ class PostManager
         return $this->postRepository->findBy([], [], 100);
     }
 
+    public function getByTitle($title): array
+    {
+        return $this->postRepository->findByTitle($title);
+    }
+
     public function getById($id): Post
     {
         return $this->postRepository->find($id);

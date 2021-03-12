@@ -22,19 +22,17 @@ class PostRepository extends ServiceEntityRepository
     // /**
     //  * @return Test[] Returns an array of Test objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findByTitle($title)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('t.title = :val')
+            ->setParameter('val', $title)
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Test

@@ -76,4 +76,12 @@ class PostController extends AbstractController
         $data = $this->postManager->getById($postId);
         return $this->json($data);
     }
+
+    /**
+     * @Route("/title/{title}", methods={"GET"})
+     */
+    public function getByTitle($title) {
+        $data = $this->postManager->getByTitle($title);
+        return $this->json($data);
+    }
 }

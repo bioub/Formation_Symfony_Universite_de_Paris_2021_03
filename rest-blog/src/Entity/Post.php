@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\PostRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @ApiResource()
  */
 class Post
 {
@@ -41,7 +44,10 @@ class Post
     /** @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts") */
     protected $user;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post") */
+    /**
+     * @ApiSubresource()
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     */
     protected $comments;
 
     public function __construct()
