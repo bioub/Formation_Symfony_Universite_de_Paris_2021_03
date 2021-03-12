@@ -257,3 +257,19 @@ serializer:
     circular_reference_handler: App\Utils\HandleCircularReference
 ```
 
+## Tests Automatisés
+
+Compléter les tests unitaires dans `tests/Entity/PostTest.php` en testant les propriétés `id` et `content``
+
+Dans `tests/Manager/PostJsonPlaceholderManagerTest.php` remplacer les lignes :
+
+```
+$encoders = [new JsonEncoder()];
+$normalizers = [new GetSetMethodNormalizer(), new ArrayDenormalizer()];
+
+$serializer = new Serializer($normalizers, $encoders);
+```
+
+Par un Spy créé via prophecy sur `Symfony\Component\Serializer\SerializerInterface`, il faudra que la méthode `deserialize` retourne un tableau de `App\Entity\Post` et vérifier quelle soit bien appelée 1 seule fois.
+
+Dans `test/Controller/PostControllerTest.php` créer un test fonctionnel de `POST /contacts` en remplaçant le manager par un Spy comme dans `testList()` (pas besoin de créer de faux Serializer et Validator qui seront injectés par le framework).
