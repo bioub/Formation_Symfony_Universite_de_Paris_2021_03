@@ -1,0 +1,7 @@
+<ng-container *ngIf="posts$ | async as posts">
+  <h2>Nombre de posts : {{ totalPosts$ | async }}</h2>
+  <app-post *ngFor="let postElement of posts" [postObject]="postElement" [counter]="0"
+            (buttonClicked)="onPostButtonClicked($event)"></app-post>
+  <app-title-list [posts]="posts"></app-title-list>
+  <button mat-flat-button color="warn">Delete First Post</button>
+</ng-container>
