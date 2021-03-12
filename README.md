@@ -214,3 +214,46 @@ Dans `PostManager` injecter l'entity manager de Doctrine en vérifiant au préal
 Appeler les méthodes de l'entity manager dans la méthode `create` de `PostManager`
 
 Tester ensuite avec Postman que vos routes répondent les données en provenance de la base de données.
+
+## Doctrine associations
+
+Supprimer les associations créées dans le projet PHP-Objet (comments, user, posts)
+
+Créer une association bidirectionnelle `ManyToOne` et `OneToMany` entre `Post` et `User`
+
+Créer une association bidirectionnelle `ManyToOne` et `OneToMany` entre `Comment` et `Post`
+
+Modifier ensuite la classe `App\DataFixture\AppFixtures` pour qu'elle créé des liens entre, en prenant aléatoirement des `Post` et des `User`, exemple :
+
+```
+$post->setUser($user);
+$comment->setPost($post);
+```
+
+Regenerer les fixtures avec `bin/console doctrine:fixture:load`
+
+Si vous testez vos routes, vous devriez avoir une erreur de références circulaires.
+
+Créer la classe `App\Utils\HandleCircularReference` :
+
+```
+<?php
+
+namespace App\Utils;
+
+class HandleCircularReference
+{
+    public function __invoke($object, $format, $context)
+    {
+        return ["id" => $object->getId()];
+    }
+}
+```
+
+Dans le fichier `config/framework.yaml` enregistrer cette classe :
+
+```
+serializer:
+    circular_reference_handler: App\Utils\HandleCircularReference
+```
+
